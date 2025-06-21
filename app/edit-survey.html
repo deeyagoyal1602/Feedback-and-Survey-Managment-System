@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Survey | SurveyPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+  <nav class="w-full bg-white shadow fixed top-0 left-0 z-10">
+    <!-- ...same navbar as other pages... -->
+  </nav>
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-xl mt-24">
+    <h2 class="text-2xl font-bold mb-4">Edit Survey</h2>
+    <form id="editSurveyForm" class="flex flex-col gap-4">
+      <input id="title" class="border p-2 rounded" placeholder="Survey Title" required />
+      <textarea id="question" class="border p-2 rounded" placeholder="Survey Question" required></textarea>
+      <button type="submit"
+  class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow-lg transition-transform duration-200 hover:scale-110 hover:from-blue-600 hover:to-pink-600">
+  Submit
+</button>
+    </form>
+    <div id="msg" class="mt-2 text-center"></div>
+  </div>
+  <script>
+    // Get survey id from URL
+    function getSurveyId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    // Load survey data
+    async function loadSurvey() {
+      const id = getSurveyId();
+      const res = await fetch(`http://localhost:5000/api/surveys/${id}`);
+      const data = await res.json();
+      document.getElementById('title').value = data.title || "";
+      document.getElementById('question').value = data.question || "";
+    }
+
+    document.getElementById('editSurveyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = getSurveyId();
+      const title = document.getElementById('title').value.trim();
+      const question = document.getElementById('question').value.trim();
+      const msg = document.getElementById('msg');
+      msg.textContent = "";
+      try {
+        const res = await fetch(`http://localhost:5000/api/surveys/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, question })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.textContent = "Survey updated successfully!";
+          msg.className = "text-green-500 mt-2";
+          setTimeout(() => {
+            window.location.href = "surveys.html";
+          }, 1000); // 1 second baad redirect
+        } else {
+          msg.textContent = data.message || "Update failed.";
+          msg.className = "text-red-500 mt-2";
+        }
+      } catch (err) {
+        msg.textContent = "Server error.";
+        msg.className = "text-red-500 mt-2";
+      }
+    });
+
+    loadSurvey();
+  </script>
+</body>
+</html>

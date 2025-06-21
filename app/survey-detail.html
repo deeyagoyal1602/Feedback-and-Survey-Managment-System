@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Survey Detail | SurveyPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(-45deg, #6EE7B7, #3B82F6, #A78BFA, #F472B6);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+  <!-- Navbar (copy same as other pages) -->
+  <nav class="w-full bg-white shadow fixed top-0 left-0 z-10">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" alt="SurveyPro Logo" class="h-9 w-9 drop-shadow">
+        <span class="font-extrabold text-2xl text-blue-600 tracking-wide">SurveyPro</span>
+      </div>
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">Dashboard</a>
+        <a href="create-survey.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">Create Survey</a>
+        <a href="surveys.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">View Surveys</a>
+        <!-- Desktop Navbar -->
+        <button id="logoutBtn"
+          class="ml-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-110 hover:from-red-600 hover:to-purple-600">
+          Logout
+        </button>
+      </div>
+      <div class="md:hidden flex items-center">
+        <button id="navToggle" class="text-blue-600 focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 bg-white shadow">
+      <a href="dashboard.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">Dashboard</a>
+      <a href="create-survey.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">Create Survey</a>
+      <a href="surveys.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">View Surveys</a>
+      <!-- Mobile Menu -->
+      <button id="logoutBtnMobile"
+        class="w-full mt-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-red-600 hover:to-purple-600">
+        Logout
+      </button>
+    </div>
+  </nav>
+  <script>
+    // Hamburger menu toggle
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(navToggle) {
+      navToggle.onclick = () => {
+        mobileMenu.classList.toggle('hidden');
+      };
+    }
+  </script>
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8s0PLhYd6IMrzQr2RVaQgBTYqA3XHNBg",
+      authDomain: "feedback-94cc9.firebaseapp.com",
+      projectId: "feedback-94cc9",
+      storageBucket: "feedback-94cc9.appspot.com",
+      messagingSenderId: "342423286323",
+      appId: "1:342423286323:web:73ae25a99b9f3f94b56946"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Desktop logout
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    };
+    // Mobile logout
+    const logoutBtnMobile = document.getElementById("logoutBtnMobile");
+    if(logoutBtnMobile) {
+      logoutBtnMobile.onclick = async () => {
+        await signOut(auth);
+        window.location.href = "login.html";
+      };
+    }
+  </script>
+  <!-- Navbar End -->
+
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-xl mt-24">
+    <div id="surveyDetail">
+      <h2 class="text-2xl font-bold mb-2" id="surveyTitle">Loading...</h2>
+      <p class="mb-4 text-gray-700" id="surveyQuestion"></p>
+    </div>
+    <hr class="my-4">
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Feedbacks</h3>
+      <ul id="feedbackList" class="mb-4 space-y-2"></ul>
+    </div>
+    <form id="feedbackForm" class="flex flex-col gap-2">
+      <textarea id="feedbackInput" class="border p-2 rounded" placeholder="Write your feedback..." required></textarea>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Submit Feedback</button>
+    </form>
+    <div id="feedbackMsg" class="mt-2 text-center"></div>
+  </div>
+  <script>
+    // Get survey id from URL
+    function getSurveyId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    async function loadSurvey() {
+      const id = getSurveyId();
+      if (!id) return;
+
+      const res = await fetch(`http://localhost:5000/api/surveys/${id}`);
+      const data = await res.json();
+
+      document.getElementById('surveyTitle').textContent = data.title || "No Title";
+      document.getElementById('surveyQuestion').textContent = data.question || "";
+      const feedbackList = document.getElementById('feedbackList');
+      feedbackList.innerHTML = "";
+      (data.feedbacks || []).forEach(f => {
+        const li = document.createElement('li');
+        li.className = "bg-gray-100 rounded px-3 py-2";
+        li.textContent = f;
+        feedbackList.appendChild(li);
+      });
+    }
+
+    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = getSurveyId();
+      const feedback = document.getElementById('feedbackInput').value.trim();
+      const msg = document.getElementById('feedbackMsg');
+      msg.textContent = "";
+
+      if (!feedback) {
+        msg.textContent = "Please enter feedback.";
+        msg.className = "text-red-500 mt-2";
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/surveys/${id}/feedback`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ feedback })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.textContent = "Feedback submitted!";
+          msg.className = "text-green-500 mt-2";
+          document.getElementById('feedbackForm').reset();
+          loadSurvey(); // Refresh feedbacks
+        } else {
+          msg.textContent = data.message || "Failed to submit feedback.";
+          msg.className = "text-red-500 mt-2";
+        }
+      } catch (err) {
+        msg.textContent = "Server error. Try again later.";
+        msg.className = "text-red-500 mt-2";
+      }
+    });
+
+    loadSurvey();
+  </script>
+</body>
+</html>
