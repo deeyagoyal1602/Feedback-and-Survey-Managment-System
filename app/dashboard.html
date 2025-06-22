@@ -168,61 +168,26 @@
     });
 
     // Load dashboard stats and recent surveys
-    async function loadDashboardData(uid) {
-      try {
-        // Fetch user's surveys
-        const surveysRef = collection(db, "surveys");
-        const userSurveysQuery = query(surveysRef, where("ownerId", "==", uid));
-        const surveySnapshot = await getDocs(userSurveysQuery);
+    async function loadDashboardData() {
+      const res = await fetch('http://localhost:5000/api/surveys');
+      const surveys = await res.json();
 
-        // Stats
-        const totalSurveys = surveySnapshot.size;
-        let activeSurveys = 0;
-        let recentResponses = 0;
-        let recentSurveys = [];
+      // Total Surveys
+      document.getElementById('totalSurveys').textContent = surveys.length;
 
-        surveySnapshot.forEach(doc => {
-          const data = doc.data();
-          if (data.status === "active") activeSurveys++;
-          if (Array.isArray(data.responses)) recentResponses += data.responses.length;
-          recentSurveys.push({ title: data.title, createdAt: data.createdAt?.toDate?.() || null });
-        });
+      // Active Surveys
+      const activeSurveys = surveys.filter(s => s.isActive || s.status === 'active');
+      document.getElementById('activeSurveys').textContent = activeSurveys.length;
 
-        // Sort recent surveys by createdAt
-        recentSurveys.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-        const topRecent = recentSurveys.slice(0, 5);
-
-        // Update DOM
-        document.getElementById("totalSurveys").innerText = totalSurveys;
-        document.getElementById("activeSurveys").innerText = activeSurveys;
-        document.getElementById("recentResponses").innerText = recentResponses;
-
-        // Render recent surveys
-        const list = document.getElementById("recentSurveysList");
-        list.innerHTML = "";
-        if (topRecent.length === 0) {
-          list.innerHTML = `<li class="py-4 px-6 text-gray-500">No surveys yet.</li>`;
-        } else {
-          topRecent.forEach(survey => {
-            const dateStr = survey.createdAt ? survey.createdAt.toLocaleDateString() : "";
-            // Optionally show more info (e.g., number of responses)
-            list.innerHTML += `<li class="py-4 px-6 hover:bg-gray-50 flex flex-col md:flex-row md:justify-between md:items-center">
-              <div>
-                <span class="font-semibold">${survey.title}</span>
-                ${survey.question ? `<div class="text-gray-500 text-sm mt-1">${survey.question}</div>` : ""}
-              </div>
-              <div class="flex flex-col md:items-end mt-2 md:mt-0">
-                <span class="text-gray-400 text-sm">${dateStr}</span>
-                ${typeof survey.responses === "number" ? `<span class="text-xs text-green-600">${survey.responses} responses</span>` : ""}
-              </div>
-            </li>`;
-          });
+      // Recent Responses (last feedback text from all surveys)
+      let recent = null;
+      surveys.forEach(survey => {
+        const feedbacks = survey.feedbacks || [];
+        if (feedbacks.length) {
+          recent = feedbacks[feedbacks.length - 1];
         }
-      } catch (err) {
-        console.error("Dashboard data error:", err);
-        loadingOverlay.style.display = "none";
-        alert("Failed to load dashboard data.");
-      }
+      });
+      document.getElementById('recentResponses').textContent = recent ? recent : '0';
     }
 
     // Desktop logout
