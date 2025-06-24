@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>Survey Results | SurveyPro</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
   <!-- Navbar (copy from other pages) -->
@@ -17,6 +19,14 @@
     <h3 class="text-lg font-semibold mb-2">All Feedbacks</h3>
     <ul id="feedbackList" class="mb-4 space-y-2"></ul>
     <div id="analytics" class="mt-6"></div>
+    <div class="my-8 flex flex-col items-center">
+      <h3 class="text-xl font-bold mb-2">Survey Results</h3>
+      <canvas id="resultsChart" width="400" height="300"></canvas>
+    </div>
+    <div class="flex gap-4 my-4">
+      <button id="exportCSV" class="px-4 py-2 bg-green-500 text-white rounded">Export CSV</button>
+      <button id="exportPDF" class="px-4 py-2 bg-blue-500 text-white rounded">Export PDF</button>
+    </div>
     <button onclick="window.location.href='surveys.html'"
   class="mt-6 px-4 py-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-red-600 hover:to-purple-600 hover:shadow-lg">
   Back to Surveys
@@ -53,7 +63,67 @@
       document.getElementById('analytics').innerHTML = `
         <div class="text-blue-700 font-semibold">Total Feedbacks: ${(data.feedbacks || []).length}</div>
       `;
+
+      // Example: Replace this with your actual data fetching logic
+      const responses = data.feedbacks || [];
+
+      // Count responses for each option
+      const counts = {};
+      responses.forEach(ans => {
+        counts[ans] = (counts[ans] || 0) + 1;
+      });
+      const labels = Object.keys(counts);
+      const chartData = Object.values(counts);
+
+      // Render chart
+      const ctx = document.getElementById('resultsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie', // or 'bar'
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Responses',
+            data: chartData,
+            backgroundColor: [
+              '#60a5fa', '#a78bfa', '#f472b6', '#34d399', '#fbbf24'
+            ],
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
     }
+
+    document.getElementById('exportCSV').onclick = function() {
+      // Example: feedbacks is an array of responses
+      const feedbacks = Array.from(document.querySelectorAll('#feedbackList li')).map(li => li.textContent);
+      let csv = "Feedback\n";
+      feedbacks.forEach(fb => {
+        csv += `"${fb.replace(/"/g, '""')}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'survey-results.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    document.getElementById('exportPDF').onclick = function() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.text("Survey Results", 10, 10);
+  const feedbacks = Array.from(document.querySelectorAll('#feedbackList li')).map(li => li.textContent);
+  feedbacks.forEach((fb, i) => {
+    doc.text(`${i + 1}. ${fb}`, 10, 20 + i * 10);
+  });
+  doc.save('survey-results.pdf');
+};
 
     loadResults();
   </script>
