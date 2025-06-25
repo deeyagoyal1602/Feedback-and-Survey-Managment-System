@@ -9,7 +9,7 @@
   <script type="module" src="auth.js"></script>
   <style>
     body {
-      background: linear-gradient(-45deg, #6EE7B7, #3B82F6, #A78BFA, #F472B6);
+      background: linear-gradient(120deg, #e0e7ef 0%, #f8fafc 100%);
       background-size: 400% 400%;
       animation: gradientBG 10s ease infinite;
     }
@@ -19,33 +19,31 @@
       100% {background-position: 0% 50%;}
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center text-gray-800 dark:text-gray-100 relative overflow-hidden">
-  <!-- SVG Wave Top -->
-  <svg class="absolute top-0 left-0 w-full h-48" viewBox="0 0 1440 320">
-    <path fill="#a78bfa" fill-opacity="0.4" d="M0,160L80,170.7C160,181,320,203,480,197.3C640,192,800,160,960,154.7C1120,149,1280,171,1360,181.3L1440,192L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-  </svg>
+
   <!-- Navbar Start -->
-  <nav class="w-full bg-white shadow fixed top-0 left-0 z-10">
+  <nav class="w-full bg-blue-900/95 shadow-md fixed top-0 left-0 z-10">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       <!-- Left: Logo and Brand -->
       <div class="flex items-center space-x-2">
-        <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" alt="SurveyPro Logo" class="h-9 w-9 drop-shadow">
-        <span class="font-extrabold text-2xl text-blue-600 tracking-wide">SurveyPro</span>
+        <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" alt="SurveyPro Logo" class="h-9 w-9 drop-shadow" />
+        <span class="font-extrabold text-2xl text-white tracking-wide">SurveyPro</span>
       </div>
       <!-- Right: Navigation Links (Desktop) -->
       <div class="hidden md:flex items-center space-x-4">
-        <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">Dashboard</a>
-        <a href="create-survey.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">Create Survey</a>
-        <a href="surveys.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">View Surveys</a>
+        <a href="dashboard.html" class="text-white hover:text-blue-300 font-semibold transition">Dashboard</a>
+        <a href="create-survey.html" class="text-white hover:text-blue-300 font-semibold transition">Create Survey</a>
+        <a href="surveys.html" class="text-white hover:text-blue-300 font-semibold transition">View Surveys</a>
         <button id="logoutBtn"
-          class="ml-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-110 hover:from-red-600 hover:to-purple-600">
+          class="ml-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-110 hover:from-blue-800 hover:to-blue-600">
           Logout
         </button>
       </div>
       <!-- Hamburger (Mobile) -->
       <div class="md:hidden flex items-center">
-        <button id="navToggle" class="text-blue-600 focus:outline-none">
+        <button id="navToggle" class="text-white focus:outline-none">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -53,12 +51,12 @@
       </div>
     </div>
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 bg-white shadow">
-      <a href="dashboard.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">Dashboard</a>
-      <a href="create-survey.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">Create Survey</a>
-      <a href="surveys.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">View Surveys</a>
+    <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 bg-blue-900/95 shadow">
+      <a href="dashboard.html" class="block py-2 text-white hover:text-blue-300 font-semibold">Dashboard</a>
+      <a href="create-survey.html" class="block py-2 text-white hover:text-blue-300 font-semibold">Create Survey</a>
+      <a href="surveys.html" class="block py-2 text-white hover:text-blue-300 font-semibold">View Surveys</a>
       <button id="logoutBtnMobile"
-        class="w-full mt-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-red-600 hover:to-purple-600">
+        class="w-full mt-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-blue-800 hover:to-blue-600">
         Logout
       </button>
     </div>
@@ -103,24 +101,25 @@
   </script>
   <!-- Navbar End -->
 
-  <div class="relative z-10 p-8 mt-24 bg-white/80 dark:bg-gray-900/80 rounded-xl shadow-xl flex flex-col items-center gap-4 transition-all duration-300 max-w-lg mx-auto">
-    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Survey Illustration" class="w-24 h-24 mb-2 drop-shadow-lg animate-bounce" />
-    <h1 class="text-5xl font-extrabold mb-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">Welcome to SurveyPro</h1>
-    <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">Create, share, and analyze surveys with style!<br>
-      <span class="text-sm text-purple-500">Your feedback journey starts here 🚀</span>
+  <div class="relative z-10 p-10 mt-28 bg-white/95 dark:bg-gray-900/90 rounded-xl shadow-2xl flex flex-col items-center gap-6 transition-all duration-300 max-w-lg mx-auto">
+    <h1 class="text-4xl font-bold mb-2 text-blue-900 dark:text-blue-200 text-center animate__animated animate__fadeInDown" id="welcomeHeading">
+      Welcome to SurveyPro
+    </h1>
+    <p class="text-lg text-gray-600 dark:text-gray-300 mb-4 text-center">
+      Create, share, and analyze surveys with a modern and simple interface.
     </p>
     <div>
       <button id="createSurveyBtn" type="button"
-        class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-6 py-2 rounded-lg mr-3 shadow-lg transition-transform duration-200 hover:scale-110 hover:from-blue-600 hover:to-pink-600">
+        class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-6 py-2 rounded-lg mr-3 shadow-lg transition-transform duration-200 hover:scale-105 hover:from-blue-800 hover:to-blue-600">
         Create Survey
       </button>
-      <button
-        class="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 text-white px-6 py-2 rounded-lg shadow-lg transition-transform duration-200 hover:scale-110 hover:from-green-600 hover:to-purple-600">
+      <button id="giveFeedbackBtn"
+        class="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-6 py-2 rounded-lg shadow-lg transition-transform duration-200 hover:scale-105 hover:from-blue-600 hover:to-cyan-500">
         Give Feedback
       </button>
     </div>
   </div>
-  <button id="toggleDark" class="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-3 py-1 rounded shadow transition">
+  <button id="toggleDark" class="absolute top-4 right-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-3 py-1 rounded shadow transition">
     Toggle Dark Mode
   </button>
   <script>

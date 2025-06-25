@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dashboard | SurveyPro</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SurveyPro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(-45deg, #6EE7B7, #3B82F6, #A78BFA, #F472B6);
+      background: linear-gradient(120deg, #e0e7ef 0%, #f8fafc 100%);
       background-size: 400% 400%;
       animation: gradientBG 10s ease infinite;
     }
@@ -16,35 +17,30 @@
       100% {background-position: 0% 50%;}
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body class="bg-white min-h-screen flex flex-col items-center justify-center text-center">
   <!-- Navbar Start -->
-  <nav class="w-full bg-white shadow fixed top-0 left-0 z-10">
+  <nav class="w-full bg-blue-900/95 shadow-md fixed top-0 left-0 z-10">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       <!-- Left: Logo and Brand -->
       <div class="flex items-center space-x-2">
-        <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" alt="SurveyPro Logo" class="h-9 w-9 drop-shadow">
-        <span class="font-extrabold text-2xl text-blue-600 tracking-wide">SurveyPro</span>
+        <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" alt="SurveyPro Logo" class="h-9 w-9 drop-shadow" />
+        <span class="font-extrabold text-2xl text-white tracking-wide">SurveyPro</span>
       </div>
       <!-- Right: Navigation Links (Desktop) -->
       <div class="hidden md:flex items-center space-x-4">
-        <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">Dashboard</a>
-        <a href="create-survey.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">Create Survey</a>
-        <a href="surveys.html" class="text-gray-700 hover:text-blue-600 font-semibold transition">View Surveys</a>
-        <!-- User Profile Info -->
-        <div id="userProfile" class="flex items-center space-x-2 ml-4 hidden">
-          <img id="userPhoto" src="" alt="User Photo" class="h-8 w-8 rounded-full border border-gray-300 object-cover">
-          <span id="userEmail" class="text-gray-700 text-sm"></span>
-        </div>
-        <!-- Desktop Navbar -->
+        <a href="dashboard.html" class="text-white hover:text-blue-300 font-semibold transition">Dashboard</a>
+        <a href="create-survey.html" class="text-white hover:text-blue-300 font-semibold transition">Create Survey</a>
+        <a href="surveys.html" class="text-white hover:text-blue-300 font-semibold transition">View Surveys</a>
         <button id="logoutBtn"
-          class="ml-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-110 hover:from-red-600 hover:to-purple-600">
+          class="ml-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-110 hover:from-blue-800 hover:to-blue-600">
           Logout
         </button>
       </div>
       <!-- Hamburger (Mobile) -->
       <div class="md:hidden flex items-center">
-        <button id="navToggle" class="text-blue-600 focus:outline-none">
+        <button id="navToggle" class="text-white focus:outline-none">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -52,18 +48,12 @@
       </div>
     </div>
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 bg-white shadow">
-      <a href="dashboard.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">Dashboard</a>
-      <a href="create-survey.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">Create Survey</a>
-      <a href="surveys.html" class="block py-2 text-gray-700 hover:text-blue-600 font-semibold">View Surveys</a>
-      <!-- User Profile Info (Mobile) -->
-      <div id="userProfileMobile" class="flex items-center space-x-2 mt-2 mb-2 hidden">
-        <img id="userPhotoMobile" src="" alt="User Photo" class="h-8 w-8 rounded-full border border-gray-300 object-cover">
-        <span id="userEmailMobile" class="text-gray-700 text-sm"></span>
-      </div>
-      <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 bg-blue-900/95 shadow">
+      <a href="dashboard.html" class="block py-2 text-white hover:text-blue-300 font-semibold">Dashboard</a>
+      <a href="create-survey.html" class="block py-2 text-white hover:text-blue-300 font-semibold">Create Survey</a>
+      <a href="surveys.html" class="block py-2 text-white hover:text-blue-300 font-semibold">View Surveys</a>
       <button id="logoutBtnMobile"
-        class="w-full mt-2 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-red-600 hover:to-purple-600">
+        class="w-full mt-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-3 py-1 rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-blue-800 hover:to-blue-600">
         Logout
       </button>
     </div>
@@ -76,37 +66,37 @@
     </svg>
     <span class="text-blue-600 font-semibold text-lg">Loading your dashboard...</span>
   </div> -->
-  <h1 id="welcomeMsg" class="text-3xl font-bold mb-4 mt-32">Welcome to SurveyPro!</h1>
+  <h1 id="welcomeMsg" class="text-3xl font-bold mb-4 mt-32 animate__animated animate__fadeInDown">Welcome Deeya Goyal!</h1>
   <!-- Dashboard Stats Section -->
   <div id="dashboardStats" class="w-full max-w-2xl mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="bg-blue-100 rounded-lg p-6 flex flex-col items-center shadow">
-      <span class="text-4xl font-bold text-blue-600" id="totalSurveys">0</span>
-      <span class="mt-2 text-gray-700 font-semibold">Total Surveys</span>
+    <div class="bg-white/95 dark:bg-gray-900/90 rounded-xl p-6 flex flex-col items-center shadow-2xl">
+      <span class="text-4xl font-bold text-blue-700" id="totalSurveys">0</span>
+      <span class="mt-2 text-gray-700 dark:text-gray-300 font-semibold">Total Surveys</span>
     </div>
-    <div class="bg-green-100 rounded-lg p-6 flex flex-col items-center shadow">
-      <span class="text-4xl font-bold text-green-600" id="recentResponses">0</span>
-      <span class="mt-2 text-gray-700 font-semibold">Recent Responses</span>
+    <div class="bg-white/95 dark:bg-gray-900/90 rounded-xl p-6 flex flex-col items-center shadow-2xl">
+      <span class="text-4xl font-bold text-cyan-600" id="recentResponses">0</span>
+      <span class="mt-2 text-gray-700 dark:text-gray-300 font-semibold">Recent Responses</span>
     </div>
-    <div class="bg-yellow-100 rounded-lg p-6 flex flex-col items-center shadow">
-      <span class="text-4xl font-bold text-yellow-600" id="activeSurveys">0</span>
-      <span class="mt-2 text-gray-700 font-semibold">Active Surveys</span>
+    <div class="bg-white/95 dark:bg-gray-900/90 rounded-xl p-6 flex flex-col items-center shadow-2xl">
+      <span class="text-4xl font-bold text-green-600" id="activeSurveys">0</span>
+      <span class="mt-2 text-gray-700 dark:text-gray-300 font-semibold">Active Surveys</span>
     </div>
   </div>
   <!-- Quick Links Section -->
   <div class="w-full max-w-2xl mt-8 flex flex-col md:flex-row gap-4 justify-center">
     <a href="create-survey.html"
-       class="flex-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white py-4 rounded-lg font-semibold text-lg shadow-lg hover:from-blue-600 hover:to-pink-600 hover:scale-105 transition text-center">
+       class="flex-1 bg-gradient-to-r from-blue-700 to-blue-500 text-white py-4 rounded-lg font-semibold text-lg shadow-lg hover:from-blue-800 hover:to-blue-600 hover:scale-105 transition text-center">
       + New Survey
     </a>
     <a href="feedback.html"
-       class="flex-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 text-white py-4 rounded-lg font-semibold text-lg shadow-lg hover:from-emerald-500 hover:to-blue-500 hover:scale-105 transition text-center">
+       class="flex-1 bg-gradient-to-r from-blue-500 to-cyan-400 text-white py-4 rounded-lg font-semibold text-lg shadow-lg hover:from-blue-600 hover:to-cyan-500 hover:scale-105 transition text-center">
       Give Feedback
     </a>
   </div>
   <!-- Recent Surveys Preview -->
   <div class="w-full max-w-2xl mt-10">
-    <h2 class="text-xl font-bold mb-4 text-left">Recent Surveys</h2>
-    <ul id="recentSurveysList" class="bg-white rounded-lg shadow divide-y"></ul>
+    <h2 class="text-xl font-bold mb-4 text-left text-black">Recent Surveys</h2>
+    <ul id="recentSurveysList" class="bg-gradient-to-r from-cyan-100 via-blue-50 to-blue-200 dark:from-blue-900 dark:via-gray-900 dark:to-blue-800 rounded-xl shadow-xl divide-y divide-blue-100 dark:divide-gray-800 p-4"></ul>
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
