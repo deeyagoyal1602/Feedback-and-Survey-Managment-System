@@ -9,10 +9,32 @@
   <script type="module" src="auth.js"></script>
   <style>
     body {
-      background: linear-gradient(120deg, #e0e7ef 0%, #f8fafc 100%);
-      background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      position: relative;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                  url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: white;
     }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(120deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      z-index: -1;
+    }
+    
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
       50% {background-position: 100% 50%;}
@@ -20,8 +42,10 @@
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- AOS Animate On Scroll CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center text-gray-800 dark:text-gray-100 relative overflow-hidden">
+<body class="min-h-screen flex flex-col items-center justify-center text-gray-800 dark:text-gray-100 relative ">
 
   <!-- Navbar Start -->
   <nav class="w-full bg-blue-900/95 shadow-md fixed top-0 left-0 z-10">
@@ -122,6 +146,101 @@
   <button id="toggleDark" class="absolute top-4 right-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-3 py-1 rounded shadow transition">
     Toggle Dark Mode
   </button>
+
+  <!-- Features Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 mt-20 max-w-7xl mx-auto animate__animated animate__fadeIn">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Powerful Features</h2>
+      <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">Everything you need to create, distribute, and analyze surveys effectively</p>
+    </div>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Feature 1 -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 transform transition-all duration-500 hover:scale-110 hover:bg-white/20" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800" data-aos-once="true" data-aos-anchor-placement="top-bottom">
+        <div class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 text-center">Easy Creation</h3>
+        <p class="text-gray-300 text-center">Create beautiful, responsive surveys in minutes with our intuitive drag-and-drop interface.</p>
+      </div>
+      <!-- Feature 2 -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 transform transition-all duration-500 hover:scale-110 hover:bg-white/20" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800" data-aos-once="true" data-aos-anchor-placement="top-bottom">
+        <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 text-center">Real-time Analytics</h3>
+        <p class="text-gray-300 text-center">Get instant insights with our powerful analytics dashboard and reporting tools.</p>
+      </div>
+      <!-- Feature 3 -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 transform transition-all duration-500 hover:scale-110 hover:bg-white/20" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800" data-aos-once="true" data-aos-anchor-placement="top-bottom">
+        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 text-center">Secure & Private</h3>
+        <p class="text-gray-300 text-center">Your data is protected with enterprise-grade security and privacy controls.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-black/30 mt-10 animate__animated animate__fadeInUp">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-white mb-4 animate__animated animate__fadeIn">What Our Users Say</h2>
+        <p class="text-xl text-gray-300">Join thousands of satisfied users worldwide</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all duration-500 hover:scale-110 animate__animated animate__fadeInUp" data-aos="zoom-in" data-aos-delay="150" data-aos-duration="900" data-aos-once="true" style="animation-delay: 0.2s">
+          <div class="flex items-center mb-4">
+            <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/women/32.jpg" alt="User">
+            <div>
+              <h4 class="text-white font-semibold">Sarah Johnson</h4>
+              <p class="text-blue-400 text-sm">Marketing Director</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">"SurveyPro has completely transformed how we collect customer feedback. The analytics are incredibly powerful and easy to understand."</p>
+          <div class="flex mt-4 text-yellow-400">
+            ★★★★★
+          </div>
+        </div>
+        <!-- Testimonial 2 -->
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all duration-500 hover:scale-110 animate__animated animate__fadeInUp" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="900" data-aos-once="true" style="animation-delay: 0.4s">
+          <div class="flex items-center mb-4">
+            <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/45.jpg" alt="User">
+            <div>
+              <h4 class="text-white font-semibold">Michael Chen</h4>
+              <p class="text-blue-400 text-sm">Product Manager</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">"The ease of creating and distributing surveys is unmatched. Our response rates have doubled since we started using SurveyPro!"</p>
+          <div class="flex mt-4 text-yellow-400">
+            ★★★★★
+          </div>
+        </div>
+        <!-- Testimonial 3 -->
+        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all duration-500 hover:scale-110 animate__animated animate__fadeInUp" data-aos="zoom-in" data-aos-delay="350" data-aos-duration="900" data-aos-once="true" style="animation-delay: 0.6s">
+          <div class="flex items-center mb-4">
+            <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+            <div>
+              <h4 class="text-white font-semibold">Emily Rodriguez</h4>
+              <p class="text-blue-400 text-sm">HR Specialist</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">"The employee feedback tools have been invaluable for our organization. Highly recommend SurveyPro to any HR professional."</p>
+          <div class="flex mt-4 text-yellow-400">
+            ★★★★★
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script>
     document.getElementById('createSurveyBtn').onclick = () => {
       window.location.href = 'create-survey.html';
@@ -133,6 +252,75 @@
     document.getElementById('toggleDark').onclick = () => {
       document.documentElement.classList.toggle('dark');
     };
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900/90 text-gray-300 py-12 relative z-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1">
+          <div class="flex items-center space-x-2 mb-4">
+            <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" alt="SurveyPro Logo" class="h-8 w-8" />
+            <span class="text-white font-bold text-xl">SurveyPro</span>
+          </div>
+          <p class="text-sm">Empowering businesses with powerful survey tools to gather meaningful insights and make data-driven decisions.</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Product</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">Features</a></li>
+            <li><a href="#" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#" class="hover:text-white transition">Templates</a></li>
+            <li><a href="#" class="hover:text-white transition">Integrations</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Resources</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+            <li><a href="#" class="hover:text-white transition">API Docs</a></li>
+            <li><a href="#" class="hover:text-white transition">Community</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Company</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-white transition">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition">Careers</a></li>
+            <li><a href="#" class="hover:text-white transition">Contact</a></li>
+            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm">© 2025 SurveyPro. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white transition">
+            <span class="sr-only">Twitter</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition">
+            <span class="sr-only">GitHub</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.343-1.11-1.343-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.528 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.195 22 16.442 22 12.017 22 6.484 17.523 2 12 2z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AOS Animate On Scroll JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 900,
+      easing: 'ease-out-cubic',
+    });
   </script>
 </body>
 </html>
