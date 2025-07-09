@@ -82,10 +82,19 @@
       </button>
     </div>
 
-    <button onclick="window.location.href='surveys.html'"
-      class="mt-4 px-5 py-2 bg-gradient-to-r from-red-600 to-pink-500 text-white rounded-lg font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-red-700 hover:to-pink-600">
-      Back to Surveys
-    </button>
+    <div class="flex flex-wrap gap-4 justify-center mt-6">
+      <button onclick="window.location.href='surveys.html'"
+        class="px-5 py-2 bg-gradient-to-r from-red-600 to-pink-500 text-white rounded-lg font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-red-700 hover:to-pink-600">
+        Back to Surveys
+      </button>
+      <button id="shareSurvey"
+        class="px-5 py-2 bg-gradient-to-r from-purple-600 to-indigo-500 text-white rounded-lg font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-purple-700 hover:to-indigo-600 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+        </svg>
+        Share Survey
+      </button>
+    </div>
   </div>
 
   <script>
@@ -180,6 +189,51 @@
     });
     document.getElementById("logoutBtnMobile")?.addEventListener("click", () => {
       window.location.href = "login.html";
+    });
+
+    // Share survey functionality
+    document.getElementById('shareSurvey').addEventListener('click', async () => {
+      const surveyId = getSurveyId();
+      if (!surveyId) return;
+      
+      // Create the survey URL
+      const surveyUrl = `${window.location.origin}${window.location.pathname.replace('results.html', 'survey-detail.html')}?id=${surveyId}`;
+      
+      try {
+        // Try to use the Web Share API if available (mobile devices)
+        if (navigator.share) {
+          await navigator.share({
+            title: 'Take this survey',
+            text: 'Check out this survey!',
+            url: surveyUrl
+          });
+        } else {
+          // Fallback to copying to clipboard
+          await navigator.clipboard.writeText(surveyUrl);
+          
+          // Show success message
+          const shareBtn = document.getElementById('shareSurvey');
+          const originalText = shareBtn.innerHTML;
+          shareBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Link Copied!
+          `;
+          shareBtn.classList.remove('from-purple-600', 'to-indigo-500', 'hover:from-purple-700', 'hover:to-indigo-600');
+          shareBtn.classList.add('from-green-500', 'to-green-400', 'hover:from-green-600', 'hover:to-green-500');
+          
+          // Revert button after 2 seconds
+          setTimeout(() => {
+            shareBtn.innerHTML = originalText;
+            shareBtn.classList.remove('from-green-500', 'to-green-400', 'hover:from-green-600', 'hover:to-green-500');
+            shareBtn.classList.add('from-purple-600', 'to-indigo-500', 'hover:from-purple-700', 'hover:to-indigo-600');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Error sharing:', err);
+        alert('Could not share the survey. Please copy the URL manually.');
+      }
     });
 
     loadResults();
