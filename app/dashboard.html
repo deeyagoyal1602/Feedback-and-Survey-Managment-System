@@ -7,14 +7,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(120deg, #e0e7ef 0%, #f8fafc 100%);
-      background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      background-image: url('dashboard.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -58,14 +55,6 @@
       </button>
     </div>
   </nav>
-  <!-- Loading Spinner Overlay -->
-  <!-- <div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-50">
-    <svg class="animate-spin h-12 w-12 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-    </svg>
-    <span class="text-blue-600 font-semibold text-lg">Loading your dashboard...</span>
-  </div> -->
   <h1 id="welcomeMsg" class="text-3xl font-bold mb-4 mt-32 animate__animated animate__fadeInDown">Welcome Deeya Goyal!</h1>
   <!-- Dashboard Stats Section -->
   <div id="dashboardStats" class="w-full max-w-2xl mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -115,12 +104,6 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-
-    // Show loading spinner initially
-    // const loadingOverlay = document.getElementById("loadingOverlay");
-    // loadingOverlay.style.display = "flex";
-
-    // Show user name if logged in and load dashboard data
     onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {

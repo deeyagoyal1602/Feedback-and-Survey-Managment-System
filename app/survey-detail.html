@@ -59,10 +59,6 @@
       <p class="mb-4 text-gray-700" id="surveyQuestion"></p>
     </div>
     <hr class="my-4">
-    <div>
-      <h3 class="text-lg font-semibold mb-2 text-blue-600">Feedbacks</h3>
-      <ul id="feedbackList" class="mb-4 space-y-2"></ul>
-    </div>
     <form id="feedbackForm" class="flex flex-col gap-2">
       <textarea id="feedbackInput" class="border p-2 rounded" placeholder="Write your feedback..." required></textarea>
       <button type="submit" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-4 py-2 rounded shadow-lg transition-transform duration-200 hover:scale-110 hover:from-blue-800 hover:to-blue-600">
@@ -116,14 +112,6 @@
 
       document.getElementById('surveyTitle').textContent = data.title || "No Title";
       document.getElementById('surveyQuestion').textContent = data.question || "";
-      const feedbackList = document.getElementById('feedbackList');
-      feedbackList.innerHTML = "";
-      (data.feedbacks || []).forEach(f => {
-        const li = document.createElement('li');
-        li.className = "bg-gray-100 rounded px-3 py-2 shadow-sm";
-        li.textContent = f;
-        feedbackList.appendChild(li);
-      });
     }
 
     document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
@@ -145,13 +133,12 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ feedback })
         });
-        const data = await res.json();
         if (res.ok) {
-          msg.textContent = "Feedback submitted!";
+          msg.textContent = "Feedback submitted! Thank you.";
           msg.className = "text-green-500 mt-2";
           document.getElementById('feedbackForm').reset();
-          loadSurvey(); // Refresh feedbacks
         } else {
+          const data = await res.json().catch(() => ({ message: 'Failed to submit feedback.' }));
           msg.textContent = data.message || "Failed to submit feedback.";
           msg.className = "text-red-500 mt-2";
         }

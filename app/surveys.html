@@ -152,6 +152,10 @@
               class="px-2 py-1 bg-gradient-to-r from-green-500 to-green-700 text-white rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-green-600 hover:to-green-800 hover:shadow-lg">
               Results
             </button>
+            <button onclick="shareSurvey('${survey._id}', this)"
+              class="px-2 py-1 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded font-semibold shadow transition-transform duration-200 hover:scale-105 hover:from-purple-600 hover:to-indigo-700 hover:shadow-lg">
+              Share
+            </button>
           </div>
         `;
         surveyList.appendChild(div);
@@ -168,6 +172,34 @@
 
     function editSurvey(id) {
       window.location.href = `edit-survey.html?id=${id}`;
+    }
+
+    async function shareSurvey(id, btn) {
+      const surveyUrl = `${window.location.origin}${window.location.pathname.replace('surveys.html', 'survey-detail.html')}?id=${id}`;
+      
+      try {
+        if (navigator.share) {
+          await navigator.share({
+            title: 'Take this survey',
+            text: 'Check out this survey!',
+            url: surveyUrl
+          });
+        } else {
+          await navigator.clipboard.writeText(surveyUrl);
+          
+          const originalText = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.disabled = true;
+          
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Error sharing:', err);
+        alert('Could not share the survey. Please copy the URL manually.');
+      }
     }
 
     fetchSurveys();
