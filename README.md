@@ -1,20 +1,4 @@
-🔍 Project Overview
-The project is divided into two major folders:
 
-app → Frontend
-
-api → Backend
-
-The project includes full-stack features: creating, distributing, and managing surveys and feedbacks using:
-
-Frontend: HTML, Tailwind CSS, JavaScript
-
-Backend: Node.js, Express.js, MongoDB
-
-✅ Here's a Complete README.md File for Your Project:
-markdown
-Copy
-Edit
 # Feedback and Survey Management System
 
 A full-stack web application that allows users to create, distribute, and manage surveys and feedback responses in real time.
@@ -35,25 +19,6 @@ A full-stack web application that allows users to create, distribute, and manage
 
 ---
 
-## 📁 Project Structure
-
-Feedback-and-Survey/
-│
-├── app/ # Frontend
-│ ├── css/ # Tailwind CSS styles
-│ ├── js/ # Frontend logic (fetch API, DOM)
-│ ├── pages/ # HTML Pages (Create, Give Feedback, All Surveys)
-│ └── index.html # Entry page (dashboard or home)
-│
-├── api/ # Backend
-│ ├── models/ # Mongoose schema definitions (survey, feedback)
-│ ├── routes/ # Express routes
-│ ├── controllers/ # Logic for handling requests
-│ └── server.js # App entry point
-│
-├── .gitignore
-├── package.json
-└── README.md
 
 yaml
 Copy
